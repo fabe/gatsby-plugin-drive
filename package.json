@@ -1,0 +1,36 @@
+{
+  "name": "@fs/gatsby-plugin-drive",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Fabian Schultz <desk@fabianschultz.com>",
+  "description": "Downloads and caches a Google Drive folder that you can then query with gatsby-source-filesystem.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabe/gatsby-plugin-drive"
+  },
+  "bugs": {
+    "url": "https://github.com/fabe/gatsby-plugin-drive/issues"
+  },
+  "homepage": "https://github.com/fabe/gatsby-plugin-drive#readme",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "prepublish": "cross-env NODE_ENV=production npm run build",
+    "watch": "babel -w src --out-dir . --ignore __tests__"
+  },
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "cross-env": "^5.2.0"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "gtoken": "^2.3.0",
+    "mkdirp": "^0.5.1",
+    "request": "^2.87.0",
+    "rimraf": "^2.6.2"
+  }
+}
