@@ -39,8 +39,8 @@ function recursiveFolders(array, parent = '', token, destination) {
   return new Promise(async (resolve, reject) => {
     let promises = [];
     let filesToDownload = shouldExportGDocs
-			? array
-			: array.filter(file => file.mimeType !== GOOGLE_DOC)
+      ? array
+      : array.filter(file => file.mimeType !== GOOGLE_DOC)
 
     for (let file of filesToDownload) {
       // Check if it`s a folder or a file
@@ -66,8 +66,8 @@ function recursiveFolders(array, parent = '', token, destination) {
             }
 
             const buffer = file.mimeType === GOOGLE_DOC
-							? await googleapi.getGDoc(file.id, token, exportMime)
-							: await googleapi.getFile(file.id, token);
+              ? await googleapi.getGDoc(file.id, token, exportMime)
+              : await googleapi.getFile(file.id, token);
 
             // Finally, write buffer to file.
             fs.writeFile(dest, buffer, err => {
@@ -86,20 +86,20 @@ function recursiveFolders(array, parent = '', token, destination) {
 }
 
 const fileExtensionsByMime = new Map([
-	['text/html', '.html'],
-	['application/zip', '.zip'],
-	['text/plain', '.txt'],
-	['application/rtf', '.rtf'],
-	['application/vnd.oasis.opendocument.text', '.odt'],
-	['application/pdf', '.pdf'],
-	['application/vnd.openxmlformats-officedocument.wordprocessingml.document', '.docx'],
-	['application/epub+zip', '.epub']
+  ['text/html', '.html'],
+  ['application/zip', '.zip'],
+  ['text/plain', '.txt'],
+  ['application/rtf', '.rtf'],
+  ['application/vnd.oasis.opendocument.text', '.odt'],
+  ['application/pdf', '.pdf'],
+  ['application/vnd.openxmlformats-officedocument.wordprocessingml.document', '.docx'],
+  ['application/epub+zip', '.epub']
 ]);
 
 const getFilenameByMime = file => {
-	if (file.mimeType === GOOGLE_DOC) {
-		return `${file.name}${fileExtensionsByMime.get(exportMime)}`
-	} else {
-		return file.name;
-	}
+  if (file.mimeType === GOOGLE_DOC) {
+    return `${file.name}${fileExtensionsByMime.get(exportMime)}`
+  } else {
+    return file.name;
+  }
 }

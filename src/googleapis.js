@@ -66,24 +66,24 @@ const getFile = (fileId, token) => {
 };
 
 const getGDoc = (fileId, token, mimeType) => {
-	return new Promise((resolve, reject) => {
-		request({
-			uri: `https://www.googleapis.com/drive/v3/files/${fileId}/export`,
-			auth: {
-				bearer: token
-			},
-			encoding: null,
-			qs: {
-				mimeType: mimeType
-			}
-		}, (err, res, body) => {
-			if (err) {
-				reject(err)
-			} else {
-				resolve(body)
-			}
-		})
-	})
+  return new Promise((resolve, reject) => {
+    request({
+      uri: `https://www.googleapis.com/drive/v3/files/${fileId}/export`,
+      auth: {
+        bearer: token
+      },
+      encoding: null,
+      qs: {
+        mimeType: mimeType
+      }
+    }, (err, res, body) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(body)
+      }
+    })
+  })
 }
 
 module.exports = {
