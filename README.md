@@ -1,6 +1,7 @@
 # gatsby-plugin-drive
 
 Downloads and caches a Google Drive folder that you can then query with `gatsby-source-filesystem`.
+Optionally exports Google Docs to a usable format.
 
 > This is still a work in progress.
 
@@ -19,15 +20,19 @@ In order to use this plugin, you'll need to generate a Google Service Account an
 
 plugins: [
   {
-    resolve: `@fs/gatsby-plugin-drive`,
+    resolve: '@fs/gatsby-plugin-drive',
     options: {
-      folderId: `GOOGLE_DRIVE_FOLDER_ID`,
+      folderId: 'GOOGLE_DRIVE_FOLDER_ID',
       keyFile: path.resolve(__dirname, 'YOUR_SERVICE_ACCOUNT_KEYFILE.json'),
-      destination: path.join(__dirname, `src/content`),
-    },
-  },
-],
+      destination: path.join(__dirname, 'src/content'),
+      exportGDocs: true,
+      exportMimeType: 'text/html'
+    }
+  }
+]
 ```
+If the `exportGDocs` option is enabled, all Google Docs in the folder will be exported with the MIME type set in the `exportMimeType` option. You can see a list of available Google Docs export MIME types [here](https://developers.google.com/drive/api/v3/manage-downloads).
+If the `exportGDocs` option is disabled, all Google Docs in the folder will be ignored.
 
 Your drive folder will download all files everytime it builds, except when a file already exists or is cached. To download all files again, set up an npm clean script like:
 
