@@ -43,3 +43,4 @@ Your drive folder will download all files everytime it builds, except when a fil
 ## Author
 
 * Fabian Schultz ([@fschultz\_](https://twitter.com/fschultz_)) - [Stink Studios](https://stinkstudios.com)
+* Elias Jørgensen ([@\_eliasjorgensen](https://twitter.com/_eliasjorgensen))
