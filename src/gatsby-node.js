@@ -9,10 +9,11 @@ const GOOGLE_DOC = 'application/vnd.google-apps.document';
 
 let shouldExportGDocs;
 let exportMime;
+let middleware;
 
 exports.onPreBootstrap = (
   { graphql, actions },
-  { folderId, keyFile, destination, exportGDocs, exportMimeType }
+  { folderId, keyFile, destination, exportGDocs, exportMimeType, exportMiddleware }
 ) => {
   return new Promise(async resolve => {
     log(`Started downloading content`);
@@ -22,6 +23,9 @@ exports.onPreBootstrap = (
     const cmsFiles = await googleapi.getFolder(folderId, token);
     shouldExportGDocs = exportGDocs;
     exportMime = exportMimeType;
+    middleware = exportMiddleware === undefined 
+      ? x => x 
+      : exportMiddleware; 
 
     // Create content directory if it doesn't exist.
     mkdirp(destination);
@@ -66,7 +70,7 @@ function recursiveFolders(array, parent = '', token, destination) {
             }
 
             const buffer = file.mimeType === GOOGLE_DOC
-              ? await googleapi.getGDoc(file.id, token, exportMime)
+              ? await middleware(googleapi.getGDoc(file.id, token, exportMime))
               : await googleapi.getFile(file.id, token);
 
             // Finally, write buffer to file.
