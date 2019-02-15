@@ -26,13 +26,19 @@ plugins: [
       keyFile: path.resolve(__dirname, 'YOUR_SERVICE_ACCOUNT_KEYFILE.json'),
       destination: path.join(__dirname, 'src/content'),
       exportGDocs: true,
-      exportMimeType: 'text/html'
+      exportMimeType: 'text/html',
+      exportMiddleware: someFunction
     }
   }
 ]
 ```
 If the `exportGDocs` option is enabled, all Google Docs in the folder will be exported with the MIME type set in the `exportMimeType` option. You can see a list of available Google Docs export MIME types [here](https://developers.google.com/drive/api/v3/manage-downloads).
 If the `exportGDocs` option is disabled, all Google Docs in the folder will be ignored.
+
+The `exportMiddleware` option is optional. If set, the plugin will run each Google Doc through the function, before it writes it to disk.
+A usecase for this, could be cleaning up, or manipulating, the HTML that the Google Drive API returns.  
+The expected function signature is `Buffer -> Buffer`.
+
 
 Your drive folder will download all files everytime it builds, except when a file already exists or is cached. To download all files again, set up an npm clean script like:
 
