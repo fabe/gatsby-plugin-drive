@@ -3,8 +3,6 @@
 Downloads and caches a Google Drive folder that you can then query with `gatsby-source-filesystem`.
 Optionally exports Google Docs to a usable format.
 
-> This is still a work in progress.
-
 ## Installation
 
 ```bash
@@ -39,12 +37,15 @@ The `exportMiddleware` option is optional. If set, the plugin will run each Goog
 A usecase for this, could be cleaning up, or manipulating, the HTML that the Google Drive API returns.  
 The expected function signature is `Buffer -> Buffer`.
 
-
 Your drive folder will download all files everytime it builds, except when a file already exists or is cached. To download all files again, set up an npm clean script like:
 
 ```json
 "clean": "rimraf src/content",
 ```
+
+## Rate Limiting
+
+The default amount of allowed requests per user per 100 seconds is `1,000`. If you're planning to download a large folder with this plugin, you might have to increase this limit. To do that, open the "Services" tab in the Google Cloud Console, select "Google Drive API" and change the limit under ["Quotas"](https://console.developers.google.com/apis/api/drive.googleapis.com/quotas).
 
 ## Author
 
