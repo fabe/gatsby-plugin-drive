@@ -22,6 +22,7 @@ plugins: [
     options: {
       folderId: 'GOOGLE_DRIVE_FOLDER_ID',
       keyFile: path.resolve(__dirname, 'YOUR_SERVICE_ACCOUNT_KEYFILE.json'),
+      // key: 'or pass the key as a string instead of the keyfile',
       destination: path.join(__dirname, 'src/content'),
       exportGDocs: true,
       exportMimeType: 'text/html',

@@ -1,10 +1,11 @@
 const { GoogleToken } = require('gtoken');
 const request = require('request');
 
-const getToken = keyFile => {
+const getToken = ({ keyFile, key }) => {
   return new Promise((resolve, reject) => {
     const gtoken = new GoogleToken({
       keyFile,
+      key,
       scope: ['https://www.googleapis.com/auth/drive'],
     });
 
