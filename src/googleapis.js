@@ -3,14 +3,15 @@ const request = require('request');
 
 const getToken = ({ keyFile, key }) => {
   return new Promise((resolve, reject) => {
+    const scope = ['https://www.googleapis.com/auth/drive']
     const gtoken = keyFile ?
       new GoogleToken({
         keyFile,
-        scope: ['https://www.googleapis.com/auth/drive']
+        scope: scope
       }) :
       new GoogleToken({
         email: key.client_email,
-        scope: ['https://www.googleapis.com/auth/drive'],
+        scope: scope,
         key: key.private_key.replace(/(\\r)|(\\n)/g, '\n')
       });
 
