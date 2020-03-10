@@ -29,6 +29,25 @@ plugins: [
     }
   }
 ]
+
+// Or using environment variables
+
+plugins: [
+  {
+    resolve: '@fs/gatsby-plugin-drive',
+    options: {
+      folderId: process.env.GOOGLE_DRIVE_FOLDER_ID,
+      key: {
+        private_key: process.env.GOOGLE_PRIVATE_KEY,
+        client_email: process.env.GOOGLE_CLIENT_EMAIL,
+      },
+      destination: path.join(__dirname, 'src/content'),
+      exportGDocs: true,
+      exportMimeType: 'text/html',
+      exportMiddleware: someFunction
+    }
+  }
+]
 ```
 If the `exportGDocs` option is enabled, all Google Docs in the folder will be exported with the MIME type set in the `exportMimeType` option. You can see a list of available Google Docs export MIME types [here](https://developers.google.com/drive/api/v3/manage-downloads).
 If the `exportGDocs` option is disabled, all Google Docs in the folder will be ignored.
