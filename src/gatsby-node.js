@@ -13,13 +13,15 @@ let middleware;
 
 exports.onPreBootstrap = (
   { graphql, actions },
-  { folderId, keyFile, destination, exportGDocs, exportMimeType, exportMiddleware }
+  { folderId, keyFile, key, destination, exportGDocs, exportMimeType, exportMiddleware }
 ) => {
   return new Promise(async resolve => {
     log(`Started downloading content`);
 
     // Get token and fetch root folder.
-    const token = await googleapi.getToken(keyFile);
+    const token = keyFile ? 
+      await googleapi.getToken({ keyFile }) :
+      await googleapi.getToken({ key });
     const cmsFiles = await googleapi.getFolder(folderId, token);
     shouldExportGDocs = exportGDocs;
     exportMime = exportMimeType;

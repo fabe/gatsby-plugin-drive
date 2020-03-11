@@ -1,12 +1,19 @@
 const { GoogleToken } = require('gtoken');
 const request = require('request');
 
-const getToken = keyFile => {
+const getToken = ({ keyFile, key }) => {
   return new Promise((resolve, reject) => {
-    const gtoken = new GoogleToken({
-      keyFile,
-      scope: ['https://www.googleapis.com/auth/drive'],
-    });
+    const scope = ['https://www.googleapis.com/auth/drive']
+    const gtoken = keyFile ?
+      new GoogleToken({
+        keyFile,
+        scope: scope
+      }) :
+      new GoogleToken({
+        email: key.client_email,
+        scope: scope,
+        key: key.private_key.replace(/(\\r)|(\\n)/g, '\n')
+      });
 
     gtoken.getToken((err, token) => {
       if (err) {
