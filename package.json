@@ -1,6 +1,6 @@
 {
   "name": "@fs/gatsby-plugin-drive",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "index.js",
   "license": "MIT",
   "author": "Fabian Schultz <desk@fabianschultz.com>",
