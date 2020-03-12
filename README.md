@@ -1,4 +1,4 @@
-# gatsby-plugin-drive
+# gatsby-plugin-drive-sheets
 
 Downloads and caches a Google Drive folder that you can then query with `gatsby-source-filesystem`.
 Optionally exports Google Docs to a usable format.
@@ -6,7 +6,7 @@ Optionally exports Google Docs to a usable format.
 ## Installation
 
 ```bash
-yarn add @fs/gatsby-plugin-drive
+yarn add /gatsby-plugin-drive-sheets
 ```
 
 ## Usage
