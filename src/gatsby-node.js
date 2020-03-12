@@ -79,7 +79,7 @@ function recursiveFolders(array, parent = '', token, destination) {
           // Finally, write buffer to file.
           fs.writeFile(dest, buffer, err => {
             if (err) return log(err);
-            log(`about to resolve getFilenameByMime(file)`)
+            
             resolve(getFilenameByMime(file));
             return log(`Saved file ${getFilenameByMime(file)}`);
           });
@@ -87,21 +87,7 @@ function recursiveFolders(array, parent = '', token, destination) {
       }
     }
 
-    let holdDoor = true
-    const ps = () => {
-      setTimeout(() => {
-        log('status:', proms);
-        if (holdDoor) ps();
-      }, 500);
-    }
-    ps();
-    
-    log('about to call Promises.all')
-    return Promise.all(promises).then(() => {
-      log(`reached resolve`)
-      holdDoor = false; 
-      resolve();
-    }).catch(error => {console.error(error)}).finally(() => { return log('All done')});
+    return Promise.all(promises).then(() => resolve());
   });
 }
 
