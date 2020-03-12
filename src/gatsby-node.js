@@ -101,7 +101,7 @@ function recursiveFolders(array, parent = '', token, destination) {
       log(`reached resolve`)
       holdDoor = false; 
       resolve();
-    }).catch(error => {console.error(error)).finally(() => { return log('All done')});
+    }).catch(error => {console.error(error)}).finally(() => { return log('All done')});
   });
 }
 
