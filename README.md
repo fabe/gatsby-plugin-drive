@@ -18,7 +18,7 @@ In order to use this plugin, you'll need to generate a Google Service Account an
 
 plugins: [
   {
-    resolve: '@fs/gatsby-plugin-drive',
+    resolve: 'gatsby-plugin-drive-sheets',
     options: {
       folderId: 'GOOGLE_DRIVE_FOLDER_ID',
       keyFile: path.resolve(__dirname, 'YOUR_SERVICE_ACCOUNT_KEYFILE.json'),
