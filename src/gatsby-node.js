@@ -35,6 +35,9 @@ exports.onPreBootstrap = ({ graphql, actions }, { folderId, keyFile, key, destin
     recursiveFolders(cmsFiles, undefined, token, destination).then(() => {
       console.timeEnd(`Downloading content`);
       resolve();
+    })
+    .catch(err => {
+      console.error(err);
     });
   });
 };
@@ -86,7 +89,7 @@ function recursiveFolders(array, parent = '', token, destination) {
       }
     }
     
-    return Promise.all(promises).then(() => resolve());
+    return Promise.all(promises).then(() => {resolve(); return log('all done')});
   });
 }
 
