@@ -42,7 +42,7 @@ exports.onPreBootstrap = ({ graphql, actions }, { folderId, keyFile, key, destin
 function recursiveFolders(array, parent = '', token, destination) {
   return new Promise(async (resolve, reject) => {
     let promises = [];
-    let filesToDownload = shouldExportGDocs || shouldExportGSheets ? array : array.filter(file => (file.mimeType !== GOOGLE_DOC) && (file.mimeType !== GOOGLE_SHEET));
+    let filesToDownload = shouldExportGDocs || shouldExportGSheets ? array : array.filter(file => file.mimeType !== GOOGLE_DOC && file.mimeType !== GOOGLE_SHEET);
 
     for (let file of filesToDownload) {
       // Check if it`s a folder or a file
@@ -63,30 +63,29 @@ function recursiveFolders(array, parent = '', token, destination) {
             resolve(getFilenameByMime(file));
             return log(`Using cached ${getFilenameByMime(file)}`);
           }
-          
+
           let buffer;
           switch (file.mimeType) {
-            case (GOOGLE_DOC):
-              buffer = await middleware(googleapi.getGDoc(file.id, token, exportDocMime))
+            case GOOGLE_DOC:
+              buffer = await middleware(googleapi.getGDoc(file.id, token, exportDocMime));
               break;
-            case (GOOGLE_SHEET):
-              buffer = await middleware(googleapi.getGDoc(file.id, token, exportSheetMime))
+            case GOOGLE_SHEET:
+              buffer = await middleware(googleapi.getGDoc(file.id, token, exportSheetMime));
               break;
             default:
-              buffer = await googleapi.getFile(file.id, token)
+              buffer = await googleapi.getFile(file.id, token);
           }
 
           // Finally, write buffer to file.
           fs.writeFile(dest, buffer, err => {
             if (err) return log(err);
-            
             resolve(getFilenameByMime(file));
             return log(`Saved file ${getFilenameByMime(file)}`);
           });
         }));
       }
     }
-
+    
     return Promise.all(promises).then(() => resolve());
   });
 }
@@ -96,8 +95,7 @@ const fileExtensionsByMime = new Map([['text/html', '.html'], ['application/zip'
 const getFilenameByMime = file => {
   if (file.mimeType === GOOGLE_DOC) {
     return `${file.name}${fileExtensionsByMime.get(exportDocMime)}`;
-  }
-  else if (file.mimeType === GOOGLE_SHEET) {
+  } else if (file.mimeType === GOOGLE_SHEET) {
     return `${file.name}${fileExtensionsByMime.get(exportSheetMime)}`;
   } else {
     return file.name;

@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-drive-sheets",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "main": "index.js",
   "license": "MIT",
   "author": "Max Steenbergen <maxsteenbergen+gh@gmail.com>",
