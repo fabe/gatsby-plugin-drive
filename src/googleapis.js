@@ -49,6 +49,30 @@ const getFolder = (folderId, token) => {
 };
 
 const getFile = (fileId, token) => {
+  const requestFile = (resolve, reject, fileId, token, delay) => {
+    request(
+    {
+      uri: `https://www.googleapis.com/drive/v3/files/${fileId}`,
+      auth: {
+        bearer: token,
+      },
+      encoding: null,
+      qs: {
+        alt: 'media',
+      },
+    },
+    (err, res, body) => {
+      if (err) {
+        reject(err);
+      } else if (res.statusCode == 403) {
+        setTimeout(() => {
+          requestFile(resolve, reject, fileId, token, delay * 2);
+        }, delay * 2);
+      } else {
+        resolve(body);
+      }
+    })
+  };
   return new Promise((resolve, reject) => {
     requestFile(resolve, reject, fileId, token, 1100);
   });
@@ -80,29 +104,4 @@ module.exports = {
   getFolder,
   getFile,
   getGDoc
-};
-
-function requestFile(resolve, reject, fileId, token, delay) {
-  request(
-  {
-    uri: `https://www.googleapis.com/drive/v3/files/${fileId}`,
-    auth: {
-      bearer: token,
-    },
-    encoding: null,
-    qs: {
-      alt: 'media',
-    },
-  },
-  (err, res, body) => {
-    if (err) {
-      reject(err);
-    } else if (res.statusCode == 403) {
-      setTimeout(() => {
-        requestFile(resolve, reject, fileId, token, delay * 2);
-      }, delay * 2);
-    } else {
-      resolve(body);
-    }
-  });
 };
