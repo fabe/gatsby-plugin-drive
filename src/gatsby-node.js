@@ -13,21 +13,21 @@ let middleware;
 
 exports.onPreBootstrap = (
   { graphql, actions },
-  { folderId, keyFile, key, destination, exportGDocs, exportMimeType, exportMiddleware }
+  { folderId, keyFile, key, destination, exportGDocs, exportMimeType, exportMiddleware, pageSize = 100 }
 ) => {
   return new Promise(async resolve => {
     log(`Started downloading content`);
 
     // Get token and fetch root folder.
-    const token = keyFile ? 
+    const token = keyFile ?
       await googleapi.getToken({ keyFile }) :
       await googleapi.getToken({ key });
-    const cmsFiles = await googleapi.getFolder(folderId, token);
+    const cmsFiles = await googleapi.getFolder(folderId, token, pageSize);
     shouldExportGDocs = exportGDocs;
     exportMime = exportMimeType;
-    middleware = exportMiddleware === undefined 
-      ? x => x 
-      : exportMiddleware; 
+    middleware = exportMiddleware === undefined
+      ? x => x
+      : exportMiddleware;
 
     // Create content directory if it doesn't exist.
     mkdirp(destination);
@@ -56,7 +56,7 @@ function recursiveFolders(array, parent = '', token, destination) {
         mkdirp(path.join(destination, parent, file.name));
 
         // Then, get the files inside and run the function again.
-        const files = await googleapi.getFolder(file.id, token);
+        const files = await googleapi.getFolder(file.id, token, pageSize);
         promises.push(
           recursiveFolders(files, `${parent}/${file.name}`, token, destination)
         );
