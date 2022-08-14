@@ -34,14 +34,14 @@ exports.onPreBootstrap = (
 
     // Start downloading recursively through all folders.
     console.time(`Downloading content`);
-    recursiveFolders(cmsFiles, undefined, token, destination).then(() => {
+    recursiveFolders(cmsFiles, undefined, token, destination, pageSize).then(() => {
       console.timeEnd(`Downloading content`);
       resolve();
     });
   });
 };
 
-function recursiveFolders(array, parent = '', token, destination) {
+function recursiveFolders(array, parent = '', token, destination, pageSize) {
   return new Promise(async (resolve, reject) => {
     let promises = [];
     let filesToDownload = shouldExportGDocs
@@ -58,7 +58,7 @@ function recursiveFolders(array, parent = '', token, destination) {
         // Then, get the files inside and run the function again.
         const files = await googleapi.getFolder(file.id, token, pageSize);
         promises.push(
-          recursiveFolders(files, `${parent}/${file.name}`, token, destination)
+          recursiveFolders(files, `${parent}/${file.name}`, token, destination, pageSize)
         );
       } else {
         promises.push(
